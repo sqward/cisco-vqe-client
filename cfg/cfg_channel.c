@@ -323,7 +323,8 @@ cfg_channel_ret_e cfg_channel_add_map (channel_mgr_t *channel_mgr_p,
         if (channel_p->mode == SOURCE_MODE ||
             channel_p->mode == LOOKASIDE_MODE) {
             /* Add the fbt address and rtcp port */
-            if (channel_add_map(&channel_mgr_p->fbt_map,
+            if (channel_p->rtx_rtp_port != channel_p->original_source_rtcp_port &&
+                channel_add_map(&channel_mgr_p->fbt_map,
                                 channel_p->fbt_address,
                                 rtcp_port,
                                 channel_p->handle) == FALSE) {
@@ -372,7 +373,8 @@ cfg_channel_ret_e cfg_channel_add_map (channel_mgr_t *channel_mgr_p,
             }
 
             /* Add the unicast rtx address and rtcp port */
-            if (channel_add_map(&channel_mgr_p->fbt_map,
+            if (channel_p->rtx_rtp_port != channel_p->original_source_rtcp_port &&
+                channel_add_map(&channel_mgr_p->fbt_map,
                                 channel_p->fbt_address,
                                 channel_p->rtx_rtcp_port,
                                 channel_p->handle) == FALSE) {
