@@ -2613,18 +2613,8 @@ vqec_chan_bind (vqec_chanid_t chanid,
             memcpy(&(chan->chan_event_cb), chan_event_cb, 
                    sizeof(vqec_ifclient_chan_event_cb_t));
         }
-
-        /*
-         * For a non-NAT mode multicast channel, the local repair dest port 
-         * is assigned to be the repair stream's source port.  The dest
-         * port supplied in the channel configuration is NOT used in this case.
-         */
-        if (!vqec_nat_is_natmode_en() &&
-            IN_MULTICAST(ntohl(chan->cfg.primary_dest_addr.s_addr))) {
-            chan->rtp_rtx_port = chan->cfg.rtx_source_port;
-        }  else {
-            chan->rtp_rtx_port = ginfo.inputshim.rtp_eph_rtx_port;
-        }
+        
+        chan->rtp_rtx_port = ginfo.inputshim.rtp_eph_rtx_port;
     
         vqec_chan_copy_rtp_attrib(chan, &attrib);
         /* Add primary session. */
